@@ -1,0 +1,30 @@
+const int mod = 1e9 + 7;
+typedef long long int ans;
+class Solution
+{
+public:
+    ans result(ans max_of_hr, ans max_of_vr)
+    {
+        return ((max_of_hr % mod) * (max_of_vr % mod)) % mod;
+    }
+    int maxArea(int h, int w, vector<int> &horizontalCuts, vector<int> &verticalCuts)
+    {
+        sort(horizontalCuts.begin(), horizontalCuts.end());
+        sort(verticalCuts.begin(), verticalCuts.end());
+        horizontalCuts.insert(horizontalCuts.begin(), 0);
+        horizontalCuts.push_back(h);
+        verticalCuts.insert(verticalCuts.begin(), 0);
+        verticalCuts.push_back(w);
+        int max_of_hr = 0;
+        int max_of_vr = 0;
+        for (int i = 1; i < horizontalCuts.size(); i++)
+        {
+            max_of_hr = max(max_of_hr, horizontalCuts[i] - horizontalCuts[i - 1]);
+        }
+        for (int i = 1; i < verticalCuts.size(); i++)
+        {
+            max_of_vr = max(max_of_vr, verticalCuts[i] - verticalCuts[i - 1]);
+        }
+        return result(max_of_hr, max_of_vr);
+    }
+};
