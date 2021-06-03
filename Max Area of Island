@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int findarea(int i,int j,vector<vector<int>>& grid)
+    {
+        int ans;
+        if(i<0 || i>=grid.size() || j<0 || j>=grid[i].size())
+            return 0;
+        if(grid[i][j]==1)
+        {
+        grid[i][j]=0;
+        ans=1+findarea(i-1,j,grid)+findarea(i+1,j,grid)+findarea(i,j-1,grid)+findarea(i,j+1,grid);
+        return ans;
+        }
+            return 0;
+    }
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int area,max=0;
+        for(int i=0;i<grid.size();i++)
+        {
+        for(int j=0;j<grid[i].size();j++)
+        {
+            if(grid[i][j]==1)
+            {
+                area=findarea(i,j,grid);
+                if(area>max)
+                    max=area;
+            }
+        }
+        }
+        return max;
+    }
+};
