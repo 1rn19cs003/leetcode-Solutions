@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int openLock(vector<string>& deadends, string target) 
+    {
+        unordered_set<string> deads(deadends.begin(),deadends.end());
+        unordered_set<string> vis;
+        queue<string> q;
+        q.push("0000");
+        int level=0;
+        
+        while(!q.empty())
+        {
+            int size=q.size();
+            for(int i=0;i<size;i++)
+            {
+                string current=q.front();
+                q.pop();
+                if(current==target)
+                    return level;
+                if(deads.count(current) || vis.count(current))
+                    continue;
+                vis.insert(current);
+                findset(current,q);
+            }
+        level++;
+        }
+        return -1;
+    }
+    void findset(string s,queue<string>& q)
+    {
+        for(int i=0;i<4;i++)
+        {
+            char c=s[i];
+            s[i]=(c-'0' +1)%10 +'0';
+            q.push(s);
+            s[i]=(c-'0'-1+10)%10 + '0';
+            q.push(s);
+            s[i]=c;
+        }
+    }
+};
